@@ -31,6 +31,7 @@ class Video extends StatefulWidget {
   final String url;
   final String title;
   final String subtitle;
+  final String cookie;
   final String preferredAudioLanguage;
   final List<TextTrack> textTracks;
   final String preferredTextLanguage;
@@ -47,6 +48,7 @@ class Video extends StatefulWidget {
       this.url,
       this.title = "",
       this.subtitle = "",
+      this.cookie = "",
       this.preferredAudioLanguage = "mul",
       this.preferredTextLanguage = "",
       this.isLiveStream = false,
@@ -90,6 +92,7 @@ class _VideoState extends State<Video> {
             "loop": widget.loop,
             "showControls": widget.showControls,
             "url": widget.url,
+            "cookie": widget.cookie,
             "title": widget.title ?? "",
             "subtitle": widget.subtitle ?? "",
             "preferredAudioLanguage": widget.preferredAudioLanguage ?? "mul",
@@ -123,6 +126,7 @@ class _VideoState extends State<Video> {
             "loop": widget.loop,
             "showControls": widget.showControls,
             "url": widget.url,
+            "cookie": widget.cookie,
             "title": widget.title ?? "",
             "subtitle": widget.subtitle ?? "",
             "preferredAudioLanguage": widget.preferredAudioLanguage ?? "mul",
@@ -255,6 +259,7 @@ class _VideoState extends State<Video> {
           "autoPlay": widget.autoPlay,
           "loop": widget.loop,
           "url": widget.url,
+          "cookie": widget.cookie,
           "title": widget.title,
           "subtitle": widget.subtitle,
           "isLiveStream": widget.isLiveStream,

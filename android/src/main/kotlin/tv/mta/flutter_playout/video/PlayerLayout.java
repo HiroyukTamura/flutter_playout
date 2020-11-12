@@ -40,6 +40,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import org.json.JSONArray;
@@ -110,6 +111,8 @@ public class PlayerLayout extends PlayerView implements FlutterAVPlayer, EventCh
     private String preferredAudioLanguage = "mul";
 
     private String preferredTextLanguage = "";
+
+    private String cookie = "";
 
     private long position = -1;
 
@@ -191,6 +194,8 @@ public class PlayerLayout extends PlayerView implements FlutterAVPlayer, EventCh
             this.loop = args.getBoolean("loop");
 
             this.showControls = args.getBoolean("showControls");
+
+            this.cookie = args.getString("cookie");
 
             try {
                 this.subtitles = args.getJSONArray("subtitles");
@@ -499,8 +504,8 @@ public class PlayerLayout extends PlayerView implements FlutterAVPlayer, EventCh
 
     private void updateMediaSource() {
         /* Produces DataSource instances through which media data is loaded. */
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
-                Util.getUserAgent(context, "flutter_playout"));
+        DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory(Util.getUserAgent(context, "flutter_playout"));
+        dataSourceFactory.getDefaultRequestProperties().set("Cookie", cookie);
 
         /* This is the MediaSource representing the media to be played. */
         MediaSource videoSource;
@@ -567,6 +572,8 @@ public class PlayerLayout extends PlayerView implements FlutterAVPlayer, EventCh
             this.title = args.get("title");
 
             this.subtitle = args.get("description");
+
+            this.cookie = args.get("cookie");
 
             updateMediaSource();
 
