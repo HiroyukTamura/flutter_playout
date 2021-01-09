@@ -173,6 +173,8 @@ public class PlayerLayout extends PlayerView implements FlutterAVPlayer, EventCh
 
         this.viewId = id;
 
+        setUseController(false);
+
         try {
 
             JSONObject args = (JSONObject) arguments;
