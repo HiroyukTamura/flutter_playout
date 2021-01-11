@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_playout/player_state.dart';
 import 'package:flutter_playout/textTrack.dart';
@@ -62,7 +63,7 @@ class Video extends StatefulWidget {
   _VideoState createState() => _VideoState();
 }
 
-class _VideoState extends State<Video> {
+class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
   MethodChannel _methodChannel;
   int _platformViewId;
   Widget _playerWidget = Container();
@@ -75,6 +76,7 @@ class _VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GestureDetector(
       onTap: () {},
       child: _playerWidget,
@@ -184,6 +186,9 @@ class _VideoState extends State<Video> {
     _disposePlatformView(isDisposing: true);
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   void _onPlatformViewCreated(int viewId) {
     _platformViewId = viewId;
