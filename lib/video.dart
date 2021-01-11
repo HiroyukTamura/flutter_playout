@@ -67,6 +67,7 @@ class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
   MethodChannel _methodChannel;
   int _platformViewId;
   Widget _playerWidget = Container();
+  bool _isInit = false;
 
   @override
   void initState() {
@@ -84,7 +85,10 @@ class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
   }
 
   void _setupPlayer() {
-    if (widget.url != null && widget.url.isNotEmpty) {
+    if (widget.url != null && widget.url.isNotEmpty && !_isInit) {
+
+      _isInit = true;
+
       /* Android */
       if (Platform.isAndroid) {
         _playerWidget = AndroidView(
@@ -154,9 +158,9 @@ class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
 
   @override
   void didUpdateWidget(Video oldWidget) {
-    if (widget.url == null || widget.url.isEmpty) {
-      _disposePlatformView();
-    }
+    // if (widget.url == null || widget.url.isEmpty) {
+    //   _disposePlatformView();
+    // }
     if (oldWidget.url != widget.url ||
         oldWidget.title != widget.title ||
         oldWidget.subtitle != widget.subtitle ||
@@ -183,7 +187,7 @@ class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    _disposePlatformView(isDisposing: true);
+    // _disposePlatformView(isDisposing: true);
     super.dispose();
   }
 
@@ -274,15 +278,15 @@ class _VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
     }
   }
 
-  void _disposePlatformView({bool isDisposing = false}) async {
-    if (_methodChannel != null && _platformViewId != null) {
-      _methodChannel.invokeMethod("dispose");
-
-      if (!isDisposing) {
-        setState(() {
-          _methodChannel = null;
-        });
-      }
-    }
-  }
+  // void _disposePlatformView({bool isDisposing = false}) async {
+  //   if (_methodChannel != null && _platformViewId != null) {
+  //     _methodChannel.invokeMethod("dispose");
+  //
+  //     if (!isDisposing) {
+  //       setState(() {
+  //         _methodChannel = null;
+  //       });
+  //     }
+  //   }
+  // }
 }
