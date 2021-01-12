@@ -24,13 +24,13 @@ public class PlayerViewFactory extends PlatformViewFactory {
 
         registrar.platformViewRegistry().registerViewFactory("tv.mta/NativeVideoPlayer", plugin);
 
-        registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
-            @Override
-            public boolean onViewDestroy(FlutterNativeView view) {
-                plugin.onDestroy();
-                return false;
-            }
-        });
+//        registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
+//            @Override
+//            public boolean onViewDestroy(FlutterNativeView view) {
+//                plugin.onDestroy();
+//                return false;
+//            }
+//        });
     }
 
     public PlayerViewFactory(BinaryMessenger messenger, Activity activity) {
@@ -45,16 +45,17 @@ public class PlayerViewFactory extends PlatformViewFactory {
     @Override
     public PlatformView create(Context context, int id, Object args) {
 
-        playerView = new PlayerView(context, activity, id, messenger, args);
+        if (playerView == null)
+            playerView = new PlayerView(context, activity, id, messenger, args);
 
         return playerView;
     }
 
-    public void onDestroy() {
-
-        if (playerView != null) {
-
-            playerView.dispose();
-        }
-    }
+//    public void onDestroy() {
+//
+//        if (playerView != null) {
+//
+//            playerView.dispose();
+//        }
+//    }
 }
